@@ -1,0 +1,56 @@
+{
+  "name": "track_event",
+  "runtime": "babel",
+  "description": "Serverless Lambda function for project: serverless-segment",
+  "customName": false,
+  "customRole": false,
+  "handler": "functions/track_event/handler.default",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [
+    {
+      "path": "track_event",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": {
+        "application/json": "{ \"type\" : $input.json(\"$.type\"), \"userId\" : $input.json(\"$.userId\"), \"traits\" : $input.json(\"$.traits\"), \"timestamp\" : $input.json(\"$.timestamp\"), }"
+      },
+      "responses": {
+        "400": {
+          "statusCode": "400"
+        },
+        "default": {
+          "statusCode": "200",
+          "responseParameters": {},
+          "responseModels": {
+            "application/json;charset=UTF-8": "Empty"
+          },
+          "responseTemplates": {
+            "application/json;charset=UTF-8": ""
+          }
+        }
+      }
+    }
+  ],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "AWS_SECRET_ACCESS_KEY": "${aws_secret_key}",
+    "AWS_ACCESS_KEY_ID": "${aws_access_key}",
+    "AWS_DYNAMO_REGION": "${aws_dynamo_region}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
